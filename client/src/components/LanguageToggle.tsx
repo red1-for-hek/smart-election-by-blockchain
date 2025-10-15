@@ -9,7 +9,7 @@ export function LanguageToggle() {
 
   const toggleLanguage = () => {
     setLanguage(language === "bn" ? "en" : "bn");
-    console.log(`Language switched to ${language === "bn" ? "English" : "Bengali"}`);
+    // Language preference saved to localStorage
   };
 
   return (

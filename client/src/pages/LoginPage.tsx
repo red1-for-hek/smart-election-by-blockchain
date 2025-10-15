@@ -10,17 +10,16 @@ export default function LoginPage() {
   const [showRegistration, setShowRegistration] = useState(false);
 
   const handleLogin = (nid: string, password: string) => {
+    // Demo credentials for development
     if (nid === "1234567890" && password === "NoPassword") {
-      console.log("Login successful");
       setLocation("/dashboard");
     } else {
-      console.log("Invalid credentials");
       alert("ভুল NID বা পাসওয়ার্ড");
     }
   };
 
   const handleRegister = (data: any) => {
-    console.log("Registration data:", data);
+    // Registration will be handled by backend API
     alert("নিবন্ধন সফল! এখন লগইন করুন।");
     setShowRegistration(false);
   };

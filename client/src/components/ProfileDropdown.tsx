@@ -20,7 +20,7 @@ export function ProfileDropdown({ userName, nid }: ProfileDropdownProps) {
   const [, setLocation] = useLocation();
   
   const handleLogout = () => {
-    console.log("Logging out...");
+    // Logout will clear session and redirect to login
     setLocation("/");
   };
 

@@ -28,17 +28,17 @@ export function NIDVerificationDialog({
   const [faceCaptured, setFaceCaptured] = useState(false);
 
   const handleCaptureFront = () => {
-    console.log("NID front captured");
+    // NID front image captured for verification
     setFrontCaptured(true);
   };
 
   const handleCaptureBack = () => {
-    console.log("NID back captured");
+    // NID back image captured for verification
     setBackCaptured(true);
   };
 
   const handleCaptureFace = () => {
-    console.log("Face captured");
+    // Face image captured for biometric verification
     setFaceCaptured(true);
   };
 

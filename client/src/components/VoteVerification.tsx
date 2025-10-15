@@ -36,7 +36,7 @@ export function VoteVerification() {
     } else {
       setVoteRecord(null);
     }
-    console.log('Verifying vote for NID:', nid);
+    // Vote verification will be handled by blockchain API
   };
 
   return (

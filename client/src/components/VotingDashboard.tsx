@@ -105,7 +105,7 @@ export function VotingDashboard({ voterName }: VotingDashboardProps) {
     if (selectedCandidate) {
       setVotedCandidateId(selectedCandidate.id);
       setConfirmDialogOpen(false);
-      console.log('Vote confirmed for candidate:', selectedCandidate.id);
+      // Vote confirmation will be handled by blockchain API
     }
   };
 

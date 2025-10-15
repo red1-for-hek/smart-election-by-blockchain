@@ -53,7 +53,7 @@ export function VoteConfirmationDialog({
 
   const handleTakePhoto = () => {
     // Simulate photo capture
-    console.log("Photo captured for verification");
+    // Photo captured for vote verification
     setPhotoTaken(true);
   };
 
