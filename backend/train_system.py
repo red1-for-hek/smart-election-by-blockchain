@@ -12,8 +12,8 @@ def train():
     print("🎓 Training Face Recognition System")
     print("="*60)
     
-    # Find NID photo
-    nid_photos = glob.glob("training_data/nid/*.jpg")
+    # Find NID photo (jpg or png)
+    nid_photos = glob.glob("training_data/nid/*.jpg") + glob.glob("training_data/nid/*.png")
     if not nid_photos:
         print("\n❌ Error: No NID photo found!")
         print("   Please capture your NID first using web_capture.py")
@@ -22,8 +22,8 @@ def train():
     nid_path = nid_photos[0]
     print(f"\n📇 NID Photo: {nid_path}")
     
-    # Find face photos
-    face_photos = sorted(glob.glob("training_data/faces/*.jpg"))
+    # Find face photos (jpg or png)
+    face_photos = sorted(glob.glob("training_data/faces/*.jpg") + glob.glob("training_data/faces/*.png"))
     if len(face_photos) < 5:
         print(f"\n❌ Error: Only {len(face_photos)} face photos found!")
         print("   Please capture at least 5 face photos")

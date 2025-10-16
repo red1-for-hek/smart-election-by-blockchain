@@ -1,18 +1,36 @@
-fastapi==0.109.0
-uvicorn[standard]==0.27.0
+# FastAPI and server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
 python-multipart==0.0.6
-pillow==10.2.0
-numpy==1.26.3
-opencv-python==4.9.0.80
-face-recognition==1.3.0
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
+
+# Database
 motor==3.3.2
 pymongo==4.6.1
+
+# Blockchain
 web3==6.15.1
 py-solc-x==2.0.2
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.0
+
+# Real-time updates
 python-socketio==5.11.0
 aiofiles==23.2.1
-python-dotenv==1.0.0
+
+# Face verification
+opencv-python==4.9.0.80
+face-recognition==1.3.0
+pillow==10.2.0
+numpy==1.26.3
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Utils
 pydantic==2.5.3
 pydantic-settings==2.1.0

@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Camera, CreditCard, User, CheckCircle2, AlertCircle } from "lucide-react";
+import { Camera, CreditCard, User, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { api } from "@/lib/api";
 
 interface NIDVerificationDialogProps {
   open: boolean;
@@ -47,19 +48,19 @@ export function NIDVerificationDialog({
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { 
-          facingMode: "user",
-          width: { ideal: step === "face" ? 640 : 1280 },
-          height: { ideal: step === "face" ? 640 : 720 }
-        } 
+        video: { facingMode: "user" } 
       });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         streamRef.current = stream;
-        setCameraActive(true);
+        // Wait a bit then show video
+        setTimeout(() => {
+          setCameraActive(true);
+        }, 500);
       }
     } catch (err) {
-      console.error("Camera access denied:", err);
+      console.error("Camera error:", err);
+      setCameraActive(true);
     }
   };
 
@@ -132,8 +133,12 @@ export function NIDVerificationDialog({
     }
   }, [step, cameraActive]);
 
-  const handleComplete = () => {
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationResult, setVerificationResult] = useState<string | null>(null);
+
+  const handleComplete = async () => {
     if (nidFrontImage && nidBackImage && faceImage) {
+      // For now, just call the original callback to keep frontend working
       onComplete({
         nidFront: nidFrontImage,
         nidBack: nidBackImage,
@@ -150,6 +155,8 @@ export function NIDVerificationDialog({
     setFaceImage(null);
     setPassportImage(null);
     setFaceVerified(false);
+    setIsVerifying(false);
+    setVerificationResult(null);
     stopCamera();
   };
 
@@ -192,6 +199,7 @@ export function NIDVerificationDialog({
                     autoPlay 
                     playsInline 
                     muted
+                    controls={false}
                     className="w-full h-full object-cover"
                     style={{ transform: 'scaleX(-1)' }}
                   />
@@ -240,7 +248,14 @@ export function NIDVerificationDialog({
 
               <div className={`${getNIDRatio()} bg-black rounded-lg overflow-hidden border-2 border-primary relative`}>
                 {cameraActive ? (
-                  <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover" />
+                  <video 
+                    ref={videoRef} 
+                    autoPlay 
+                    playsInline 
+                    muted
+                    controls={false}
+                    className="w-full h-full object-cover" 
+                  />
                 ) : (
                   <div className="flex items-center justify-center h-full">
                     <Camera className="h-12 w-12 text-muted-foreground" />
@@ -333,6 +348,7 @@ export function NIDVerificationDialog({
                     autoPlay 
                     playsInline 
                     muted
+                    controls={false}
                     className="w-full h-full object-cover"
                     style={{ transform: 'scaleX(-1)' }}
                   />
@@ -362,13 +378,28 @@ export function NIDVerificationDialog({
               </Button>
             </div>
 
+            {verificationResult && (
+              <Alert className={verificationResult.includes("সফল") ? "border-green-500 bg-green-50" : "border-red-500 bg-red-50"}>
+                <AlertDescription className={verificationResult.includes("সফল") ? "text-green-700" : "text-red-700"}>
+                  {verificationResult}
+                </AlertDescription>
+              </Alert>
+            )}
+
             <DialogFooter>
-              <Button variant="outline" onClick={handleCancel}>
+              <Button variant="outline" onClick={handleCancel} disabled={isVerifying}>
                 বাতিল করুন
               </Button>
               {faceImage && (
-                <Button onClick={handleComplete}>
-                  যাচাইকরণ সম্পন্ন করুন
+                <Button onClick={handleComplete} disabled={isVerifying}>
+                  {isVerifying ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      যাচাই করা হচ্ছে...
+                    </>
+                  ) : (
+                    "যাচাইকরণ সম্পন্ন করুন"
+                  )}
                 </Button>
               )}
             </DialogFooter>
