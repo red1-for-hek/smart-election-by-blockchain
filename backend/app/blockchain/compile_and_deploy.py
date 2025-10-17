@@ -30,7 +30,11 @@ def compile_contract():
     # Get contract interface
     contract_id, contract_interface = compiled_sol.popitem()
     
-    return contract_interface
+    # Extract bytecode and ABI
+    return {
+        'abi': contract_interface['abi'],
+        'bytecode': contract_interface['bin']
+    }
 
 def deploy_contract():
     """Deploy contract to blockchain"""

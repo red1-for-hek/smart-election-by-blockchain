@@ -24,9 +24,12 @@ async def lifespan(app: FastAPI):
     logger.info("Starting Bangladesh Voting System API...")
     
     try:
-        # Connect to MongoDB
-        await connect_to_mongo()
-        logger.info("✅ Database connected")
+        # Try to connect to MongoDB
+        try:
+            await connect_to_mongo()
+            logger.info("✅ Database connected")
+        except Exception as e:
+            logger.warning(f"⚠️ Database connection failed: {e}")
         
         # Initialize blockchain client
         if web3_client.w3 and web3_client.w3.is_connected():
@@ -36,13 +39,15 @@ async def lifespan(app: FastAPI):
             
     except Exception as e:
         logger.error(f"❌ Startup failed: {e}")
-        raise
     
     yield
     
     # Shutdown
     logger.info("Shutting down...")
-    await close_mongo_connection()
+    try:
+        await close_mongo_connection()
+    except:
+        pass
     logger.info("✅ Cleanup completed")
 
 # Create FastAPI app
@@ -86,8 +91,11 @@ async def health_check():
         # Check database
         from app.core.db import get_database
         db = get_database()
-        await db.command('ping')
-        db_status = "connected"
+        if db:
+            await db.command('ping')
+            db_status = "connected"
+        else:
+            db_status = "disconnected"
     except Exception:
         db_status = "disconnected"
     
