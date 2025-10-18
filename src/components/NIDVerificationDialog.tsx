@@ -48,32 +48,54 @@ export function NIDVerificationDialog({
   const startCamera = async () => {
     try {
       setCameraActive(false);
+      
+      // Stop any existing stream first
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+      
       const stream = await navigator.mediaDevices.getUserMedia({ 
         video: { 
           facingMode: "user",
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
-        } 
+          width: { ideal: 1280, min: 640 },
+          height: { ideal: 720, min: 480 }
+        },
+        audio: false
       });
       
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         streamRef.current = stream;
         
-        // Wait for video to load and play
-        videoRef.current.onloadedmetadata = () => {
-          videoRef.current?.play().then(() => {
+        // Enhanced video loading
+        const video = videoRef.current;
+        
+        const handleLoadedMetadata = () => {
+          video.play().then(() => {
             setCameraActive(true);
-          }).catch(console.error);
+            console.log('Camera started successfully');
+          }).catch(err => {
+            console.error('Video play error:', err);
+            setCameraActive(true); // Still show as active
+          });
         };
         
-        // Fallback timeout
+        if (video.readyState >= 1) {
+          handleLoadedMetadata();
+        } else {
+          video.onloadedmetadata = handleLoadedMetadata;
+        }
+        
+        // Fallback
         setTimeout(() => {
-          setCameraActive(true);
-        }, 1000);
+          if (!cameraActive) {
+            setCameraActive(true);
+          }
+        }, 2000);
       }
     } catch (err) {
       console.error("Camera error:", err);
+      setCameraActive(false);
       alert("ক্যামেরা অ্যাক্সেস করতে সমস্যা হচ্ছে। অনুগ্রহ করে ব্রাউজারে ক্যামেরার অনুমতি দিন।");
     }
   };
