@@ -47,20 +47,34 @@ export function NIDVerificationDialog({
 
   const startCamera = async () => {
     try {
+      setCameraActive(false);
       const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: "user" } 
+        video: { 
+          facingMode: "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        } 
       });
+      
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         streamRef.current = stream;
-        // Wait a bit then show video
+        
+        // Wait for video to load and play
+        videoRef.current.onloadedmetadata = () => {
+          videoRef.current?.play().then(() => {
+            setCameraActive(true);
+          }).catch(console.error);
+        };
+        
+        // Fallback timeout
         setTimeout(() => {
           setCameraActive(true);
-        }, 500);
+        }, 1000);
       }
     } catch (err) {
       console.error("Camera error:", err);
-      setCameraActive(true);
+      alert("ক্যামেরা অ্যাক্সেস করতে সমস্যা হচ্ছে। অনুগ্রহ করে ব্রাউজারে ক্যামেরার অনুমতি দিন।");
     }
   };
 

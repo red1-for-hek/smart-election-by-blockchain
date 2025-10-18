@@ -19,6 +19,7 @@ const mockCandidates = [
     candidateNumber: 101,
     party: "Jamaat-e-Islami",
     partyColor: "#2D8B3C",
+    partyLogo: "/Party Logo/Jamaat-e-Islami.jpeg",
     hashId: "JAM-134",
   },
   {
@@ -28,6 +29,7 @@ const mockCandidates = [
     candidateNumber: 202,
     party: "BNP",
     partyColor: "#FF8C00",
+    partyLogo: "/Party Logo/BNP.jpeg",
     hashId: "BNP-201",
   },
   {
@@ -37,6 +39,7 @@ const mockCandidates = [
     candidateNumber: 303,
     party: "NCP",
     partyColor: "#4169E1",
+    partyLogo: "/Party Logo/NCP.jpeg",
     hashId: "NCP-089",
   },
   {
@@ -46,6 +49,7 @@ const mockCandidates = [
     candidateNumber: 404,
     party: "Jatiya Party",
     partyColor: "#DC143C",
+    partyLogo: "/Party Logo/Jatiya Party.jpeg",
     hashId: "JAT-256",
   },
 ];

@@ -11,6 +11,7 @@ interface CandidateCardProps {
   candidateNumber: number;
   party: string;
   partyColor: string;
+  partyLogo: string;
   hashId: string;
   photoUrl?: string;
   onVote: (candidateId: string) => void;
@@ -26,6 +27,7 @@ export function CandidateCard({
   candidateNumber,
   party,
   partyColor,
+  partyLogo,
   hashId,
   photoUrl,
   onVote,
@@ -40,8 +42,10 @@ export function CandidateCard({
       <CardContent className="pt-6">
         <div className="flex items-start gap-4">
           <Avatar className="h-20 w-20">
-            <AvatarImage src={photoUrl} alt={name} />
-            <AvatarFallback className="text-lg">{name.charAt(0)}</AvatarFallback>
+            <AvatarImage src={partyLogo} alt={party} />
+            <AvatarFallback className="text-lg">
+              <img src={partyLogo} alt={party} className="w-full h-full object-cover" />
+            </AvatarFallback>
           </Avatar>
           
           <div className="flex-1 space-y-2">

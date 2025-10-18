@@ -2,6 +2,10 @@ import { Switch, Route, useLocation } from "wouter";
 import LoginPage from "@/pages/LoginPage";
 import DashboardPage from "@/pages/DashboardPage";
 import VotePage from "@/pages/VotePage";
+import VerifyPage from "@/pages/VerifyPage";
+import StatisticsPage from "@/pages/StatisticsPage";
+import ProfilePage from "@/pages/ProfilePage";
+import PostalPage from "@/pages/PostalPage-simple";
 import { VotingProvider } from "@/lib/voting-context";
 import { SimpleSidebar } from "@/components/SimpleSidebar";
 import { SimpleHeader } from "@/components/SimpleHeader";
@@ -40,18 +44,10 @@ function App() {
             <Switch>
               <Route path="/dashboard" component={DashboardPage} />
               <Route path="/vote" component={VotePage} />
-              <Route path="/verify">
-                <div className="p-6">Verify Page - Coming Soon</div>
-              </Route>
-              <Route path="/statistics">
-                <div className="p-6">Statistics Page - Coming Soon</div>
-              </Route>
-              <Route path="/profile">
-                <div className="p-6">Profile Page - Coming Soon</div>
-              </Route>
-              <Route path="/postal">
-                <div className="p-6">Postal Page - Coming Soon</div>
-              </Route>
+              <Route path="/verify" component={VerifyPage} />
+              <Route path="/statistics" component={StatisticsPage} />
+              <Route path="/profile" component={ProfilePage} />
+              <Route path="/postal" component={PostalPage} />
               <Route>
                 <div className="p-6">Page not found</div>
               </Route>

@@ -3,10 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import { Flag } from "lucide-react";
 
 const parties = [
-  { name: "Jamaat-e-Islami", color: "#2D8B3C", shortName: "জামায়াত" },
-  { name: "BNP", color: "#FF8C00", shortName: "বিএনপি" },
-  { name: "NCP", color: "#4169E1", shortName: "এনসিপি" },
-  { name: "Jatiya Party", color: "#DC143C", shortName: "জাতীয় পার্টি" },
+  { name: "Jamaat-e-Islami", logo: "/Party Logo/Jamaat-e-Islami.jpeg", shortName: "জামায়াত" },
+  { name: "BNP", logo: "/Party Logo/BNP.jpeg", shortName: "বিএনপি" },
+  { name: "NCP", logo: "/Party Logo/NCP.jpeg", shortName: "এনসিপি" },
+  { name: "Jatiya Party", logo: "/Party Logo/Jatiya Party.jpeg", shortName: "জাতীয় পার্টি" },
 ];
 
 export function PartyListCard() {
@@ -26,9 +26,13 @@ export function PartyListCard() {
               className="flex items-center gap-3 p-3 rounded-lg border hover-elevate"
               data-testid={`party-${party.name}`}
             >
-              <div
-                className="h-8 w-8 rounded-full flex-shrink-0"
-                style={{ backgroundColor: party.color }}
+              <img
+                src={party.logo}
+                alt={party.name}
+                className="h-8 w-8 rounded-full flex-shrink-0 object-cover border border-gray-200"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
               />
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm truncate">{party.shortName}</p>
